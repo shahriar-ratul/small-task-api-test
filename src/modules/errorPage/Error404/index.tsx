@@ -1,0 +1,45 @@
+import React from "react";
+import { useRouter } from "next/router";
+
+import Icon from "@/assets/icon/404.svg";
+import {
+  StyledErrorButton,
+  StyledErrorContainer,
+  StyledErrorContent,
+  StyledErrorImage,
+  StyledErrorPara
+} from "../index.styled";
+import AppPageMeta from "@/lib/AppPageMeta";
+import AppAnimate from "@/lib/AppAnimate";
+
+const ErrorPage404 = () => {
+  const router = useRouter();
+
+  const onGoBackToHome = () => {
+    router.back();
+  };
+
+  return (
+    <>
+      <AppPageMeta title="Page Not Found" />
+      <AppAnimate delay={200}>
+        <StyledErrorContainer key="page_not_found">
+          <StyledErrorImage>
+            <Icon />
+          </StyledErrorImage>
+          <StyledErrorContent>
+            <h3>Page Not Found</h3>
+            <StyledErrorPara>
+              <p className="mb-0">Page you are looking for not found!</p>
+            </StyledErrorPara>
+            <StyledErrorButton type="primary" onClick={onGoBackToHome}>
+              Go Back
+            </StyledErrorButton>
+          </StyledErrorContent>
+        </StyledErrorContainer>
+      </AppAnimate>
+    </>
+  );
+};
+
+export default ErrorPage404;

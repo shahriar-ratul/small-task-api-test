@@ -1,0 +1,147 @@
+// sass-utils
+@import './_fonts';
+
+// vendors
+@import './_tailwind';
+@import './_antd';
+
+// base
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+  @apply font-poppins;
+}
+
+
+
+ @import './_button';
+
+
+
+
+
+.ant-layout{
+  background-color: #F4F7FE;
+}
+
+.ant-menu{
+  font-size: 16px !important;
+  font-weight: 500 !important;
+}
+
+ .ant-menu-inline .ant-menu-item{
+  height: 50px !important;
+}
+
+
+
+.ant-menu-item .ant-menu-submenu-title{
+    inset-inline-start: 0;
+    /* padding-inline: calc(50% - 12px); */
+    text-overflow: clip;
+    font-weight: 500;
+}
+.ant-drawer-content-wrapper{
+    width: 80% !important;
+}
+
+  .pointer {
+    cursor: pointer;
+  }
+
+  .text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .card-hover {
+    transition: all 0.3s ease;
+    transform: scale(1);
+
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, .45);
+      transform: scale(1.05);
+    }
+  }
+
+  .text-uppercase {
+    text-transform: uppercase;
+  }
+
+
+.ant-table-thead .ant-table-cell {
+    // background-color: #4B6BFB !important;
+    background-color: #0e8fdc !important;
+    color:#F4F7FE !important;
+}
+
+// .ant-table-tbody > tr.ant-table-row:hover > td {
+//     background-color: #0e8fdc !important;
+//     color:#F4F7FE !important;
+// }
+
+
+.is-invalid {
+  border-color: #dc3545 !important;
+  background-image: none !important;
+}
+
+
+// @media screen and (min-width: 768px) {
+//   /* tile uploaded pictures */
+//  .ant-upload-list-item {
+//   float: left;
+//   width: 100%;
+//   height: 200px !important;
+//   margin-inline-end: 8px;
+// }
+
+
+// .ant-upload-list-item-thumbnail{
+//   width: 300px !important;
+//   height: 250px!important;
+//   object-fit: contain;
+// }
+// }
+
+// @media screen and (max-width: 767px) {
+//   /* tile uploaded pictures */
+//  .ant-upload-list-item {
+//   float: left;
+//   width: 100%;
+//   height: 200px !important;
+//   margin-inline-end: 8px;
+// }
+
+
+//   .ant-upload-list-item-thumbnail{
+//     width: 150px !important;
+//     height: 100px!important;
+//     object-fit: contain;
+//   }
+// }
+
+
+.ant-descriptions-item-label {
+  font-weight: 700 !important;
+  color: #0e8fdc !important;
+}
+
+.table-striped-rows tr:nth-child(2n) td {
+  background-color: #fbfbfb;
+}
+.table-striped-rows thead {
+  background-color: #f1f1f1;
+}
+
