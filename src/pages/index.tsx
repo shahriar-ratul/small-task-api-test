@@ -1,5 +1,5 @@
 import AppLoader from "@/lib/AppLoader";
-import MainDashboard from "@/modules/dashboard/MainDashboard";
+import CarList from "@/modules/car/CarList";
 
 import { useAppSelector } from "@/store/hooks";
 
@@ -9,9 +9,10 @@ const Home = () => {
   return (
     <>
       {auth.isLoading && <AppLoader />}
-      {!auth.isLoading && <MainDashboard />}
+      {!auth.isLoading && <CarList />}
     </>
   );
 };
 
+Home.guestGuard = true;
 export default Home;

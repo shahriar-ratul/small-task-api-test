@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout } from "antd";
 import LogoTitle from "./components/LogoTitle";
 import MenuLayout from "./components/MenuLayout";
@@ -7,10 +7,7 @@ import HeaderLayout from "./components/HeaderLayout";
 import DrawerLayout from "./components/DrawerLayout";
 import AppSidebar from "./components/AppSidebar";
 
-import AppAxios from "@/services/AppAxios";
-
 import { useRouter } from "next/router";
-import Cookies from "js-cookie";
 
 import AppImageLoader from "@/components/loader/AppImageLoader";
 import { useAppSelector } from "@/store/hooks";
@@ -32,19 +29,17 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     if (window.innerWidth < 576) setDrawerVisible(!drawerVisible);
   };
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
-
 
   // update ability with permissions
   useEffect(() => {
-    if (!auth.isLoggedIn) return;
-
     setLoading(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, auth]);
 
+  // console.log("auth", auth);
   return (
     <>
       {auth.isLoading && <AppImageLoader />}

@@ -9,8 +9,8 @@ interface AppPageMetaProps {
   image?: string;
 }
 
-const defaultTitle = "Scrap";
-const defaultDescription = "Admin Panel for Scrap.";
+const defaultTitle = "Task";
+const defaultDescription = "Admin Panel.";
 const defaultImage = "/images/logo.png";
 const defaultSep = " | ";
 

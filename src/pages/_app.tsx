@@ -1,7 +1,3 @@
-"use client"
-import AuthGuard from "@/context/auth/AuthGuard";
-import GuestGuard from "@/context/auth/GuestGuard";
-import AppLoader from "@/lib/AppLoader";
 import WindowWrapper from "@/lib/window-wrapper";
 import { store } from "@/store/store";
 
@@ -40,22 +36,6 @@ type ExtendedAppProps = PageProps & {
   pageProps: any;
 };
 
-type GuardProps = {
-  authGuard: boolean;
-  guestGuard: boolean;
-  children: ReactNode;
-};
-
-const Guard = ({ children, authGuard, guestGuard }: GuardProps) => {
-  if (guestGuard) {
-    return <GuestGuard fallback={<AppLoader />}>{children}</GuestGuard>;
-  } else if (!guestGuard && !authGuard) {
-    return <>{children}</>;
-  } else {
-    return <AuthGuard fallback={<AppLoader />}>{children}</AuthGuard>;
-  }
-};
-
 const queryClient = new QueryClient();
 
 const App = (props: ExtendedAppProps) => {
@@ -64,9 +44,6 @@ const App = (props: ExtendedAppProps) => {
   // Variables
   const getLayout =
     Component.getLayout ?? (page => <DefaultLayout>{page}</DefaultLayout>);
-
-  const authGuard = Component.authGuard ?? true;
-  const guestGuard = Component.guestGuard ?? false;
 
   return (
     <>
@@ -86,23 +63,14 @@ const App = (props: ExtendedAppProps) => {
                 {/* <AuthProvider> */}
                 <WindowWrapper>
                   <AppThemeProvider>
-                    <Guard authGuard={authGuard} guestGuard={guestGuard}>
-
-                      <AppPageMeta />
-                      <NextNProgress color="linear-gradient(90deg, #b656cb, #10a1a0)" />
-                      {getLayout(
-                        < Component {...pageProps} />
-                      )}
-
-                    </Guard>
+                    <AppPageMeta />
+                    <NextNProgress color="linear-gradient(90deg, #b656cb, #10a1a0)" />
+                    {getLayout(<Component {...pageProps} />)}
                   </AppThemeProvider>
                 </WindowWrapper>
               </>
               {/* query dev tools */}
-              <ReactQueryDevtools
-                initialIsOpen={false}
-                position="bottom"
-              />
+              <ReactQueryDevtools initialIsOpen={false} position="bottom" />
             </Provider>
           </QueryClientProvider>
         </CookiesProvider>
