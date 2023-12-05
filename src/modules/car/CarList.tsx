@@ -44,6 +44,18 @@ const CarList: React.FC = () => {
     undefined
   );
 
+  const [brands, setBrands] = useState<any[]>([]);
+  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+
+  const [models, setModels] = useState<any[]>([]);
+  const [selectedModel, setSelectedModel] = useState<string | null>(null);
+
+  const [colors, setColors] = useState<any[]>([]);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+
+  const [order, SetOrder] = useState("ascend");
+  const [sort, SetSort] = useState("id");
+
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
@@ -149,6 +161,57 @@ const CarList: React.FC = () => {
             pageSizeOptions: ["10", "20", "30", "40", "50"]
           }
         });
+
+        const brandList = data.items.map((item: { brand: any }) => item.brand);
+
+        // unique brand list
+        const uniqueBrandList = brandList.filter(
+          (item: any, index: any) => brandList.indexOf(item) === index
+        );
+
+        // convert brand list to object
+        const brands = uniqueBrandList.map((item: string) => {
+          return {
+            label: item,
+            value: item
+          };
+        });
+
+        setBrands(brands);
+
+        const modelList = data.items.map((item: { model: any }) => item.model);
+
+        // unique model list
+        const uniqueModelList = modelList.filter(
+          (item: any, index: any) => modelList.indexOf(item) === index
+        );
+
+        // convert model list to object
+        const models = uniqueModelList.map((item: string) => {
+          return {
+            label: item,
+            value: item
+          };
+        });
+
+        setModels(models);
+
+        const colorList = data.items.map((item: { color: any }) => item.color);
+
+        // unique color list
+        const uniqueColorList = colorList.filter(
+          (item: any, index: any) => colorList.indexOf(item) === index
+        );
+
+        // convert color list to object
+        const colors = uniqueColorList.map((item: string) => {
+          return {
+            label: item,
+            value: item
+          };
+        });
+
+        setColors(colors);
       }
       return data;
     }
@@ -191,18 +254,50 @@ const CarList: React.FC = () => {
       });
 
       setTableData([...tableData]);
+
+      SetSort((sorter as SorterResult<CarModel>).field as string);
+      SetOrder((sorter as SorterResult<CarModel>).order as string);
     }
   };
 
   const handleStatusChange = (value: boolean | undefined) => {
     setSelectedStatus(value);
-    const newData = items.filter(item => {
-      if (value === undefined) {
-        return item;
-      } else {
-        return item.isInProduction === value;
-      }
-    });
+  };
+
+  const handleBrandChange = (value: string | null) => {
+    setSelectedBrand(value);
+  };
+
+  const handleModeChange = (value: string | null) => {
+    setSelectedModel(value);
+  };
+
+  const handleColorChange = (value: string | null) => {
+    setSelectedColor(value);
+  };
+
+  const getShareUrl = () => {
+    const url = `${window.location.origin}/api/car?sort=${sort}&order=${order}&brand=${selectedBrand}&model=${selectedModel}&color=${selectedColor}&isInProduction=${selectedStatus}`;
+    window.open(url, "_blank");
+  };
+
+  const handleFilter = () => {
+    let newData = items.slice(); // Create a shallow copy to avoid modifying the original data
+
+    if (selectedStatus !== undefined) {
+      newData = newData.filter(item => item.isInProduction === selectedStatus);
+    }
+
+    if (selectedBrand !== null && selectedBrand !== undefined) {
+      newData = newData.filter(item => item.brand === selectedBrand);
+    }
+
+    if (selectedModel !== null) {
+      newData = newData.filter(item => item.model === selectedModel);
+    }
+    if (selectedColor !== null) {
+      newData = newData.filter(item => item.color === selectedColor);
+    }
 
     setTableParams({
       pagination: {
@@ -216,6 +311,9 @@ const CarList: React.FC = () => {
 
   const handleClear = () => {
     setSelectedStatus(undefined);
+    setSelectedBrand(null);
+    setSelectedModel(null);
+    setSelectedColor(null);
     SetPage(1);
     SetLimit(10);
     setTableData(items);
@@ -264,6 +362,30 @@ const CarList: React.FC = () => {
               </div>
             </>
           )}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: " 10px 5px"
+            }}
+          >
+            <Button
+              style={{
+                width: "200px",
+                textAlign: "center",
+                marginTop: "25px",
+                backgroundColor: "#4B6BFB",
+                color: "#ffffff"
+              }}
+              onClick={() => {
+                getShareUrl();
+              }}
+              className="ant-btn ant-btn-lg"
+            >
+              Get Shareable Link
+            </Button>
+          </div>
 
           <TableCard
             title="Cars List"
@@ -309,6 +431,112 @@ const CarList: React.FC = () => {
                         showSearch
                       />
                     </Space>
+                  </Col>
+                  <Col
+                    xs={24}
+                    sm={12}
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    xxl={12}
+                    className="gutter-row"
+                  >
+                    <Space style={{ width: "100%" }} direction="vertical">
+                      <span>
+                        <b>Brand</b>
+                      </span>
+                      <Select
+                        allowClear
+                        style={{
+                          width: "100%",
+                          textAlign: "start"
+                        }}
+                        placeholder="Please select"
+                        onChange={handleBrandChange}
+                        options={brands}
+                        value={selectedBrand}
+                        showSearch
+                      />
+                    </Space>
+                  </Col>
+                  <Col
+                    xs={24}
+                    sm={12}
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    xxl={12}
+                    className="gutter-row"
+                  >
+                    <Space style={{ width: "100%" }} direction="vertical">
+                      <span>
+                        <b>Mode</b>
+                      </span>
+                      <Select
+                        allowClear
+                        style={{
+                          width: "100%",
+                          textAlign: "start"
+                        }}
+                        placeholder="Please select"
+                        onChange={handleModeChange}
+                        options={models}
+                        value={selectedModel}
+                        showSearch
+                      />
+                    </Space>
+                  </Col>
+                  <Col
+                    xs={24}
+                    sm={12}
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    xxl={12}
+                    className="gutter-row"
+                  >
+                    <Space style={{ width: "100%" }} direction="vertical">
+                      <span>
+                        <b>Color</b>
+                      </span>
+                      <Select
+                        allowClear
+                        style={{
+                          width: "100%",
+                          textAlign: "start"
+                        }}
+                        placeholder="Please select"
+                        onChange={handleColorChange}
+                        options={colors}
+                        value={selectedColor}
+                        showSearch
+                      />
+                    </Space>
+                  </Col>
+                  <Col
+                    xs={24}
+                    sm={12}
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    xxl={12}
+                    className="gutter-row"
+                  >
+                    <Button
+                      style={{
+                        width: "100%",
+                        textAlign: "center",
+                        marginTop: "25px",
+                        backgroundColor: "#4B6BFB",
+                        color: "#ffffff"
+                      }}
+                      onClick={() => {
+                        handleFilter();
+                      }}
+                      className="ant-btn  ant-btn-lg"
+                    >
+                      filter
+                    </Button>
                   </Col>
                   <Col
                     xs={24}

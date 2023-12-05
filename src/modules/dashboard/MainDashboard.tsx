@@ -14,7 +14,6 @@ const MainDashboard = () => {
             margin: "0 30px"
           }}
         >
-
           <Col xs={24} sm={12} md={6}>
             <MainCard
               bgColor="#0A8FDC"
@@ -24,7 +23,6 @@ const MainDashboard = () => {
               link="/admin/purchase"
             />
           </Col>
-
         </AppRowContainer>
       </AppAnimate>
     </>

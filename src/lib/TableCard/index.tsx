@@ -20,13 +20,7 @@ interface CardProps {
   permission: string;
 }
 
-const TableCard = ({
-  title,
-  style,
-  addLink,
-  hasLink,
-  children
-}: CardProps) => (
+const TableCard = ({ title, style, addLink, hasLink, children }: CardProps) => (
   <Card
     title={title}
     style={style}

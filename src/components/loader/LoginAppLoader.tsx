@@ -23,12 +23,7 @@ const LoginAppLoader = () => {
           cursor: "wait"
         }}
       >
-        <Image
-          src="/images/icon.png"
-          width={40}
-          height={40}
-          alt="logo"
-        />
+        <Image src="/images/icon.png" width={40} height={40} alt="logo" />
         <Spin
           size="default"
           style={{
